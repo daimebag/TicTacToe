@@ -2,7 +2,7 @@ const IGNORE_DEFAULT = /node_modules/;
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractSass = new ExtractTextPlugin({
-    filename: "./css/[name].css"
+    filename: "./assets/css/[name].css"
 });
 
 
