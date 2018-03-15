@@ -7,18 +7,21 @@
   "author": "daimebag <kevin.marilleau@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack --mode development",
+    "dev": "webpack-dev-server --mode development --open 'firefox-developer-edition'",
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "bulma": "^0.6.2",
     "webpack": "^4.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
     "webpack-cli": "^2.0.11",
