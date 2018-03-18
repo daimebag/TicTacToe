@@ -24,6 +24,11 @@ module.exports = {
             }, {
                 loader: 'sass-loader'
             }]
+        }, {
+            test: /\.(png|jp(e?)g|svg)$/,
+            use: [{
+                loader: 'url-loader'
+            }]
         }]
     },
     devServer: {
@@ -37,7 +42,8 @@ module.exports = {
     },
     plugins: [
         new HTMLWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.html',
+            favicon: './src/assets/img/favicon.ico'
         }),
         reloadHtml,
 

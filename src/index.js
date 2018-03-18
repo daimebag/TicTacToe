@@ -1,4 +1,4 @@
 require('./assets/css/bulma.css');
 require('./assets/css/main.scss');
 
-import log from './assets/js/main.js';
+require('./assets/js/game.js');

@@ -40,6 +40,15 @@ module.exports = {
                     }
                 }, {
                     loader: 'sass-loader'
+                }, {
+                    test: /\.(png|jp(e?)g|svg)$/,
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: 'images/[name]-[hash].[ext]'
+                        }
+                    }]
                 }]
             })
         }]
