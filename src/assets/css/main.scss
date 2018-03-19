@@ -2,17 +2,21 @@ $content_h: calc(100vh - 396px);
 
 $color_primary: rgb(50, 115, 220);
 
+
+.hero-foot {
+  background-color: $color_primary;
+}
 // Push footer at bottom
 #content {
   margin: 12px 0px;
   min-height: calc(100vh - 396px);
 }
 
-#content, #content_container, #game_playzone, #game_board {
+#content, #content_container, .game_playzone, .game_board {
   min-height: $content_h;
 }
 
-#game_panel {
+.game_panel {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,11 +35,11 @@ $color_primary: rgb(50, 115, 220);
   align-self: stretch;
 }
 
-#game_playzone {
+.game_playzone {
   left: 12px;
 }
 
-#game_board {
+.game_board {
   display: grid;
   margin: auto;
   grid-template-columns: repeat(3, 1fr);
@@ -44,12 +48,12 @@ $color_primary: rgb(50, 115, 220);
   max-width: 200px;
 }
 
-#game_board>.game_board_cell {
+.game_board>.game_board_cell {
   border: 1px solid lightgrey;
   position: relative;
 }
 
-#game_board>.game_board_cell:before {
+.game_board>.game_board_cell:before {
   display: table;
   padding-top: 100%;
   content: '';
@@ -66,6 +70,20 @@ $color_primary: rgb(50, 115, 220);
   align-items: center;
   background-color: #242424;
   font-size: 9vmax;
+}
+
+.game_panel_article {
+  padding: 30px 50px;
+  font-size: 1.3em;
+  text-align: justify;
+}
+
+#tab_rules_game_panel {
+  background-color: whitesmoke;
+}
+
+#tab_rules_progressbar {
+  padding: 10px 20px;
 }
 
 .footer {

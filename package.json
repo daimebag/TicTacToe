@@ -7,7 +7,7 @@
   "author": "daimebag <kevin.marilleau@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open 'firefox-developer-edition'",
+    "dev": "webpack-dev-server --mode development --open 'firefox-developer-edition' --progress",
     "build": "webpack --mode production"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1",
     "webpack-cli": "^2.0.11",
     "webpack-dev-server": "^3.1.1"
   }

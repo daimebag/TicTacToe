@@ -8,11 +8,14 @@
 
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <link rel="icon" href="./assets/img/favicon.ico" />
+    <link rel="icon" href="./assets/img/favicon.ico"/>
 
     <title>TicTacToe</title>
 </head>
-<body>
+
+<body onload="init()">
+
+
 <header>
     <div class="hero is-link">
         <div class="hero-body">
@@ -25,20 +28,31 @@
             </div>
         </div>
     </div>
-
-    <div class="hero-foot"><div class="tabs is-boxed is-fullwidth">
-        <ul>
-            <li class="is-active"><a>Play</a></li>
-            <li><a>Rules</a></li>
-            <li><a>About</a></li>
-        </ul>
-    </div></div>
+    <!--BEGIN- MENU -->
+    <div class="hero-foot">
+        <div class="container">
+            <div class="tabs is-boxed is-fullwidth">
+                <ul >
+                    <li id="nav_play" class="is-danger"><a>Play</a></li>
+                    <li id="nav_rules"><a>Rules</a></li>
+                    <li id="nav_about"><a>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--MENU -END-->
 </header>
+
+
+<!--BEGIN- CONTENT -->
 <section id="content">
     <div id="content_container" class="container">
-        <div id="content_container_columns" class="columns">
-            <section id="game_playzone" class="column is-two-thirds">
-                <div id="game_board" class="has-text-white">
+
+        <!--BEGIN- TAB_PLAY -->
+        <div id="tab_play" class="columns">
+            <!--BEGIN- TAB_PLAY_GAME_PLAYZONE -->
+            <section class="game_playzone column is-two-thirds">
+                <div class="game_board has-text-white">
                     <div id="game_board_cell1" class="game_board_cell"><i class="icon ion-close"></i></div>
                     <div id="game_board_cell2" class="game_board_cell"><i class="icon ion-ios-circle-outline"></i></div>
                     <div id="game_board_cell3" class="game_board_cell"></div>
@@ -51,45 +65,122 @@
 
                 </div>
             </section>
-            <section id="game_panel" class="column is-one-third">
-                <div class="field has-addons has-addons-centered">
-                    <p id="game_panel_mode_pvp" onclick="" class="control">
-                        <a class="button">
-      <span class="icon is-small">
-          <i class="icon ion-android-contacts"></i>
-      </span>
-                            <span>Player vs Player</span>
-                        </a>
-                    </p>
-                    <p id="game_panel_mode_pve" onclick="" class="control">
-                        <a class="button">
-      <span class="icon is-small">
-        <i class="ion-monitor"></i>
-      </span>
-                            <span>Player vs Bot</span>
-                        </a>
-                    </p>
+            <!-- TAB_PLAY_GAME_PLAYZONE -END-->
+            <!--BEGIN- TAB_PLAY_GAME_PANEL -->
+            <section class="game_panel column is-one-third">
+                <div class="buttons has-addons is-centered">
+                    <button id="game_panel_mode_pvp" class="button">
+                        <span class="icon is-small">
+                            <i class="icon ion-android-contacts"></i>
+                        </span>
+                        <span>Player vs Player</span>
+                    </button>
+                    <button id="game_panel_mode_pve" class="button">
+                        <span class="icon is-small">
+                            <i class="ion-monitor"></i>
+                        </span>
+                        <span>Player vs Bot</span>
+                    </button>
                 </div>
                 <div id="game_panel_score" class="has-text-centered has-text-weight-bold"><p>0 - 0</p></div>
                 <div id="game_panel_reset_container" class="field has-addons has-addons-centered">
-                <p class="control">
-                    <button id="game_panel_reset_button" class="button is-light is-large" onclick=""><span class="icon"><i class="ion-ios-refresh-outline"></i> </span><span>Reset</span></button>
-                </p>
+                    <p class="control">
+                        <button id="game_panel_reset_button" class="button is-light is-large"><span class="icon"><i
+                                class="ion-ios-refresh-outline"></i> </span><span>Reset</span></button>
+                    </p>
                 </div>
             </section>
+            <!-- TAB_PLAY_GAME_PANEL -END-->
         </div>
+        <!-- TAB_PLAY -END-->
+        <!--BEGIN- TAB_RULES -->
+        <div id="tab_rules" class="columns">
+            <!--BEGIN- TAB_RULES_GAME_PLAYZONE -->
+            <section class="game_playzone column is-two-thirds">
+                <div class="game_board has-text-white">
+                    <div id="rules_game_board_cell1" class="game_board_cell"><i class="icon ion-close"></i></div>
+                    <div id="rules_game_board_cell2" class="game_board_cell"><i class="icon ion-ios-circle-outline"></i>
+                    </div>
+                    <div id="rules_game_board_cell3" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell4" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell5" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell6" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell7" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell8" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell9" class="game_board_cell"></div>
+
+                </div>
+                <div id="tab_rules_progressbar">
+                    <progress class="progress is-link" value="15" max="100">15%</progress>
+                </div>
+            </section>
+            <!-- TAB_RULES_GAME_PLAYZONE -END-->
+            <!--BEGIN- TAB_RULES_GAME_PANEL-->
+            <section id="tab_rules_game_panel" class="game_panel column is-one-third">
+                <div class="content game_panel_article">
+                    <p>Tic-tac-toe (also known as noughts and crosses or Xs and Os) is a paper-and-pencil game for two
+                        players.</p>
+                    <p>X and O, who take turns marking the spaces in a 3×3 grid.</p>
+                    <p>The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal
+                        row wins the game.</p>
+                </div>
+            </section>
+            <!-- TAB_RULES_GAME_PANEL -END-->
+        </div>
+        <!-- TAB_RULES -END-->
+        <!--BEGIN- TAB_ABOUT -->
+        <div id="tab_about" class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title">How does this website work?</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">John Smith</p>
+                                <p class="subtitle is-6">@johnsmith</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                            <a href="#">#css</a> <a href="#">#responsive</a>
+                            <br>
+                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TAB_ABOUT -END-->
+
     </div>
 </section>
+<!-- CONTENT -END-->
+
+
 <footer class="footer">
     <div class="container">
         <div class="columns is-multiline has-text-centered">
-        <div class="column is-one-third"><a class="has-text-white"><p class=""><i class="footer_icon icon ion-social-github"></i> View GitHub Project</p></a></div>
-            <div class="column is-one-third"><a class="has-text-white"><i class="footer_icon icon ion-android-folder-open"></i> See my other project</a></div>
-                <div class="column is-one-third"><a class="has-text-white"><i class="footer_icon icon ion-paper-airplane"></i> Contact</a></div>
+            <div class="column is-one-third"><a class="has-text-white"><p class=""><i
+                    class="footer_icon icon ion-social-github"></i> View GitHub Project</p></a></div>
+            <div class="column is-one-third"><a class="has-text-white"><i
+                    class="footer_icon icon ion-android-folder-open"></i> See my other project</a></div>
+            <div class="column is-one-third"><a class="has-text-white"><i
+                    class="footer_icon icon ion-paper-airplane"></i> Contact</a></div>
         </div>
     </div>
 </footer>
-</body>
-<script src="./main.js"></script>
 
+
+</body>
+
+<script src="./main.js"></script>
 </html>
