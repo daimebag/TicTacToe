@@ -9,10 +9,9 @@ let devServer;
 module.exports = {
     module: {
         rules: [{
-
             test: /\.js$/,
             exclude: global.exclude,
-            loader: 'babel-loader'
+            // loader: 'babel-loader'
         }, {
 
             test: /\.(s?)css$/,
@@ -31,6 +30,7 @@ module.exports = {
             }]
         }]
     },
+    devtool: 'eval-source-map',
     devServer: {
         before(app, server) {
             devServer = server;

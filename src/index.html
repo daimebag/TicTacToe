@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./assets/css/main.css">
 
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
     <link rel="icon" href="./assets/img/favicon.ico"/>
 
     <title>TicTacToe</title>
@@ -17,12 +17,12 @@
 
 
 <header>
-    <div class="hero is-link">
+    <div class="hero">
         <div class="hero-body">
             <div class="container">
 
                 <div class="hero-head"><a href="">
-                    <h1 class="title is-1">TicTacToe</h1>
+                    <h1 class="title is-1 has-text-white">TicTacToe</h1>
                     <h2 class="subtitle has-text-dark">A simple Tic Tac Toe game</h2>
                 </a></div>
             </div>
@@ -31,9 +31,9 @@
     <!--BEGIN- MENU -->
     <div class="hero-foot">
         <div class="container">
-            <div class="tabs is-boxed is-fullwidth">
-                <ul >
-                    <li id="nav_play" class="is-danger"><a>Play</a></li>
+            <div class="tabs is-boxed is-fullwidth ">
+                <ul id="nav">
+                    <li id="nav_play"><a>Play</a></li>
                     <li id="nav_rules"><a>Rules</a></li>
                     <li id="nav_about"><a>About</a></li>
                 </ul>
@@ -53,8 +53,8 @@
             <!--BEGIN- TAB_PLAY_GAME_PLAYZONE -->
             <section class="game_playzone column is-two-thirds">
                 <div class="game_board has-text-white">
-                    <div id="game_board_cell1" class="game_board_cell"><i class="icon ion-close"></i></div>
-                    <div id="game_board_cell2" class="game_board_cell"><i class="icon ion-ios-circle-outline"></i></div>
+                    <div id="game_board_cell1" class="game_board_cell"></div>
+                    <div id="game_board_cell2" class="game_board_cell"></div>
                     <div id="game_board_cell3" class="game_board_cell"></div>
                     <div id="game_board_cell4" class="game_board_cell"></div>
                     <div id="game_board_cell5" class="game_board_cell"></div>
@@ -97,10 +97,9 @@
         <div id="tab_rules" class="columns">
             <!--BEGIN- TAB_RULES_GAME_PLAYZONE -->
             <section class="game_playzone column is-two-thirds">
-                <div class="game_board has-text-white">
-                    <div id="rules_game_board_cell1" class="game_board_cell"><i class="icon ion-close"></i></div>
-                    <div id="rules_game_board_cell2" class="game_board_cell"><i class="icon ion-ios-circle-outline"></i>
-                    </div>
+                <div id="rules_game_board" class="game_board has-text-white">
+                    <div id="rules_game_board_cell1" class="game_board_cell"></div>
+                    <div id="rules_game_board_cell2" class="game_board_cell"></div>
                     <div id="rules_game_board_cell3" class="game_board_cell"></div>
                     <div id="rules_game_board_cell4" class="game_board_cell"></div>
                     <div id="rules_game_board_cell5" class="game_board_cell"></div>
@@ -110,19 +109,26 @@
                     <div id="rules_game_board_cell9" class="game_board_cell"></div>
 
                 </div>
-                <div id="tab_rules_progressbar">
-                    <progress class="progress is-link" value="15" max="100">15%</progress>
+                <div id="rules_progressbar_container">
+                    <progress id="rules_progressbar" class="progress is-link" value="0" max="0"></progress>
                 </div>
             </section>
             <!-- TAB_RULES_GAME_PLAYZONE -END-->
             <!--BEGIN- TAB_RULES_GAME_PANEL-->
-            <section id="tab_rules_game_panel" class="game_panel column is-one-third">
+            <section id="rules_game_panel" class="game_panel column is-one-third">
                 <div class="content game_panel_article">
                     <p>Tic-tac-toe (also known as noughts and crosses or Xs and Os) is a paper-and-pencil game for two
                         players.</p>
                     <p>X and O, who take turns marking the spaces in a 3×3 grid.</p>
                     <p>The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal
                         row wins the game.</p>
+                    <div class="field has-addons has-addons-centered">
+                    <p class="control">
+                        <button id="rules_replay_button" class="button is-light is-large"><span class="icon"><i
+                                class="ion-ios-play-outline"></i> </span><span>Replay</span></button>
+                    </p>
+                    </div>
+
                 </div>
             </section>
             <!-- TAB_RULES_GAME_PANEL -END-->

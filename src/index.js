@@ -1,16 +1,18 @@
 require('./assets/css/bulma.css');
 require('./assets/css/main.scss');
 
-require('./assets/js/main.js');
-require('./assets/js/game.js');
+const main = require('./assets/js/main.js');
+const game = require('./assets/js/game.js');
+const rules = require('./assets/js/rules.js');
 
 
 window.onload = function () {
     console.log('Main init');
-    tabs.rules.classList.add('is-hidden-mobile', 'is-hidden-tablet');
-    tabs.about.classList.add('is-hidden-mobile', 'is-hidden-tablet');
-    nav.play.classList.add('is-active');
-    console.log('Game init');
-    panel.mode.pve.classList.add('is-link');
-};
+    main.init();
 
+    console.log('Game init');
+    game.init();
+
+    console.log('Rules Init');
+    rules.init();
+};

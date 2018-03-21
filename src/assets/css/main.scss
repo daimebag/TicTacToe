@@ -2,10 +2,18 @@ $content_h: calc(100vh - 396px);
 
 $color_primary: rgb(50, 115, 220);
 
+.hero-body {
+  background-color: $color_primary;
+}
 
 .hero-foot {
   background-color: $color_primary;
 }
+
+#nav {
+  background-color: whitesmoke;
+}
+
 // Push footer at bottom
 #content {
   margin: 12px 0px;
@@ -78,11 +86,11 @@ $color_primary: rgb(50, 115, 220);
   text-align: justify;
 }
 
-#tab_rules_game_panel {
+#rules_game_panel {
   background-color: whitesmoke;
 }
 
-#tab_rules_progressbar {
+#rules_progressbar_container {
   padding: 10px 20px;
 }
 
