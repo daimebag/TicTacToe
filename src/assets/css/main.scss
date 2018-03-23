@@ -79,6 +79,25 @@ $color_primary: rgb(50, 115, 220);
   background-color: #242424;
   font-size: 9vmax;
 }
+.game_board_cell__pop {
+  animation: pop 0.3s linear 1;
+}
+
+.game_board_cell__win {
+   background-color: #1cca63;
+ }
+
+.game_board_cell__lose {
+  background-color: #1cca63;
+}
+
+.game_board_cell__draw {
+  background-color: #6d6d6d;
+}
+
+@keyframes pop{
+  50%  {transform: scale(1.2);}
+}
 
 .game_panel_article {
   padding: 30px 50px;

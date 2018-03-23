@@ -2,7 +2,7 @@ require('./assets/css/bulma.css');
 require('./assets/css/main.scss');
 
 const main = require('./assets/js/main.js');
-const game = require('./assets/js/game.js');
+const game = require('./assets/js/play.js');
 const rules = require('./assets/js/rules.js');
 
 
