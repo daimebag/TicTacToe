@@ -2,10 +2,10 @@ const GameModel = require('./gamemodel.js');
 
 module.exports = play_local = {
     gameboard: new GameModel(document.getElementById('play_game_board')),
-    gamesession_states: {
-        cellPlayed: undefined,
+    session: {
+        cellsPlayed: [],
         mode: 'pve',
-        round: 0
+        currentPlayer: 0
     },
     panel: {
         mode: {
@@ -13,49 +13,104 @@ module.exports = play_local = {
             pve: document.getElementById('game_panel_mode_pve')
         },
         reset: document.getElementById('game_panel_reset_button'),
-        score: document.getElementById('game_panel_score')
+        score: {
+            player1: document.getElementById('game_panel_score_player1'),
+            player2: document.getElementById('game_panel_score_player2')
+        }
     },
     init: function () {
         this.panel.mode.pve.classList.add('is-link');
-        gameSession('pve')
+        cellsToggleEvent(true);
+        this.panel.reset.addEventListener('click', reset);
+        this.panel.mode.pvp.addEventListener('click', function (e) {
+            switchGameMode(e, 'pvp');
+        });
+        this.panel.mode.pve.addEventListener('click', function (e) {
+            switchGameMode(e, 'pve');
+        });
     }
 };
 
 // ADD LISTENER FOR ALL CELLS
-for (let i = 0; i < 9; i++) {
-    play_local.gameboard.cells[i].addEventListener('click', function() {
-        play_local.gamesession_states.cellPlayed = play_local.gameboard.cells[i];
-    });
-}
-
-// PANEL SECTION - RESET BUTTON
-function reset() {
-    play_local.panel.score.innerText = "0 - 0";
-    return console.log("TicTacToe Message: Game was reinitialized.");
-}
-play_local.panel.reset.addEventListener('click', reset);
-
-//PANEL SECTION - GAMEMODE BUTTON
-function switchGameMode(mode) {
-    console.log('this = ', this);
-    if (!this.classList.contains('is-link')) {
-        reset();
-        this.classList.toggle('is-link');
-        this.nextElementSibling ?
-            this.nextElementSibling.classList.toggle('is-link') :
-            this.previousElementSibling.classList.toggle('is-link');
-        this.gamesession_states.mode = mode;
+function cellsToggleEvent(eventOn) {
+    if (eventOn) {
+        for (let cell of play_local.gameboard.cells) {
+            cell.addEventListener('click', play);
+        }
+    } else {
+        for (let cell of play_local.gameboard.cells) {
+            cell.removeEventListener('click', play);
+        }
     }
 }
-play_local.panel.mode.pvp.addEventListener('click', function() {
-    switchGameMode('pvp');
-});
-play_local.panel.mode.pve.addEventListener('click', function() {
-    switchGameMode('pve');
-});
+// PANEL SECTION - RESET BUTTON
+async function reset() {
+    play_local.gameboard.animation_states.cancelled = true;
+    cleanSession();
+    cellsToggleEvent(true);
+    play_local.panel.score.player1.innerHTML = 0;
+    play_local.panel.score.player2.innerHTML = 0;
+    await play_local.gameboard._sleep(500);
+    play_local.gameboard.animation_states.cancelled = false;
+    return console.log("TicTacToe Message: Game was reinitialized.");
+}
+
+function cleanSession () {
+    play_local.gameboard.clean();
+    play_local.session.cellsPlayed = [];
+    play_local.session.currentPlayer = 0;
+}
+
+//PANEL SECTION - GAMEMODE BUTTONS
+function switchGameMode(e, mode) {
+    let element = e.target;
+    if (!element.classList.contains('is-link')) {
+        reset();
+        element.classList.toggle('is-link');
+        element.nextElementSibling ?
+            element.nextElementSibling.classList.toggle('is-link') :
+            element.previousElementSibling.classList.toggle('is-link');
+        play_local.session.mode = mode;
+    }
+}
+
 
 
 // GAME SECTION
-function gameSession() {
+async function play() {
+    cellsToggleEvent(false);
+    const currentCell = this.id.slice(-1);
+    let scoreCurrentPlayer = Object.values(play_local.panel.score)[play_local.session.currentPlayer];
+    const scoreAnimation = ['animated', 'flipInX'];
 
+    scoreCurrentPlayer.classList.remove(...scoreAnimation);
+
+    if (play_local.session.cellsPlayed.includes(currentCell)) {
+        return false;
+    }
+    this.innerHTML = Object.values(play_local.gameboard.players)[play_local.session.currentPlayer];
+
+    const endgame = await play_local.gameboard.detectCombination();
+    if (play_local.gameboard.animation_states.cancelled) {
+        return;
+    }
+    if (endgame) {
+        cleanSession();
+        if (endgame != 'draw') {
+            scoreCurrentPlayer.innerHTML ++;
+            scoreCurrentPlayer.classList.add(...scoreAnimation);
+        }
+    }
+    else {
+        play_local.session.cellsPlayed.push(currentCell);
+        play_local.session.currentPlayer ^= true;
+        if (play_local.session.currentPlayer && play_local.session.mode == 'pve') {
+            bot();
+        }
+    }
+    cellsToggleEvent(true);
+}
+
+function bot() {
+    return true;
 }

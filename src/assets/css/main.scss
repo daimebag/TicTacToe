@@ -39,10 +39,13 @@ $color_primary: rgb(50, 115, 220);
 }
 
 #game_panel_score {
-  font-size: 12vmax;
+  font-size: 11vmax;
   align-self: stretch;
 }
 
+.game_panel_score_players {
+  display: inline-block;
+}
 .game_playzone {
   left: 12px;
 }
@@ -88,7 +91,7 @@ $color_primary: rgb(50, 115, 220);
  }
 
 .game_board_cell__lose {
-  background-color: #1cca63;
+  background-color: #ca2b2e;
 }
 
 .game_board_cell__draw {
@@ -96,7 +99,7 @@ $color_primary: rgb(50, 115, 220);
 }
 
 @keyframes pop{
-  50%  {transform: scale(1.2);}
+  50%  {transform: scale(1.1);}
 }
 
 .game_panel_article {

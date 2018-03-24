@@ -25,47 +25,80 @@ module.exports = class GameModel {
         let boardFull = true;
 
         outer:
-        for (let p = 0, player; player = Object.values(this.players)[p]; p++) {
-            let combination = "";
-            for (let cell of this.winningCombinations) {
-                switch (cell) {
-                    case " ":
-                        if (this.winningCombinations.includes(combination)) {
-                            endgameResult = p ? this.endgameResultTypes.lose : this.endgameResultTypes.win;
-                            cellsToAnimate = Array.from(combination, x => Number(x));
-                            break outer;
-                        }
-                        combination = "";
-                        break;
-                    default:
-                        if (!this.cells[cell].innerHTML) {
-                            boardFull = false;
-                            combination += "_";
-                        } else if (this.cells[cell].innerHTML == player) {
-                            combination += cell;
-                        } else {
-                            combination += "x";
-                        }
+            for (let p = 0, player; player = Object.values(this.players)[p]; p++) {
+                let combination = "";
+                for (let cell of this.winningCombinations) {
+                    switch (cell) {
+                        case " ":
+                            if (this.winningCombinations.includes(combination)) {
+                                endgameResult = p ? this.endgameResultTypes.lose : this.endgameResultTypes.win;
+                                cellsToAnimate = Array.from(combination, x => Number(x));
+                                break outer;
+                            }
+                            combination = "";
+                            break;
+                        default:
+                            if (!this.cells[cell].innerHTML) {
+                                boardFull = false;
+                                combination += "_";
+                            } else if (this.cells[cell].innerHTML == player) {
+                                combination += cell;
+                            } else {
+                                combination += "x";
+                            }
+                    }
                 }
             }
-        }
         if (cellsToAnimate) {
-            console.log(cellsToAnimate, 'combination');
             return this.endgameAnimation(cellsToAnimate, endgameResult);
         } else if (boardFull) {
             return this.endgameAnimation([0, 1, 2, 3, 4, 5, 6, 7, 8], this.endgameResultTypes.draw);
         }
+        else {
+            return false;
+        }
     };
 
     async endgameAnimation(combination, endgameResult) {
-        for (let cell of combination) {
-            if (this.animation_states.cancelled) {
-                break;
+        let endgame = true;
+        if (combination.length <= 3) {
+            for (let cell of combination) {
+                if (this.animation_states.cancelled) {
+                    return;
+                }
+                await this._sleep(200);
+                if (this.animation_states.cancelled) {
+                    return;
+                }
+                this.cells[cell].classList.add(...endgameResult);
+                await this._sleep(200);
             }
-            await this._sleep(200);
-            this.cells[cell].classList.add(...endgameResult);
-            await this._sleep(200);
+        } else {
+            endgame = 'draw';
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+            outer:
+            for (let cs = 0; cs < 3; cs++) {
+                for (let c = 0; c < 3; c++) {
+                    let cell;
+                    while (true) {
+                        if (this.animation_states.cancelled) {
+                            return;
+                        }
+                        cell = getRandomInt(9);
+                        if (combination.includes(cell)) {
+                            this.cells[cell].classList.add(...endgameResult);
+                            combination = combination.filter(e => e !== cell);
+                            break;
+                        }
+                    }
+                    await this._sleep(100);
+                }
+            }
         }
+        await this._sleep(400);
+        return endgame;
     }
 
     // CLEAN BOARD
