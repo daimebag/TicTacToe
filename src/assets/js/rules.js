@@ -2,7 +2,7 @@ const main = require('./main.js');
 const GameModel = require('./gamemodel.js');
 
 module.exports = rules_local = {
-    gamezone: {
+    game: {
         gameboard: new GameModel(document.getElementById('rules_game_board')),
         progressbar: document.getElementById('rules_progressbar')
     },
@@ -11,7 +11,7 @@ module.exports = rules_local = {
     },
     init: function () {
         main.nav.rules.addEventListener('click', async function () {
-            while (rules_local.animation_states.isrunning) {
+            while (rules_local.game.gameboard.animation_states.isrunning) {
                 await sleep(1);
             }
             await animationRun();
@@ -24,10 +24,6 @@ module.exports = rules_local = {
             animationRun();
         });
     },
-    animation_states: {
-        isrunning: false,
-        cancelled: false
-    },
     tabAlreadyActive: false
 };
 
@@ -36,38 +32,39 @@ function sleep(ms) {
 }
 
 async function animationRun() {
-    rules_local.animation_states.isrunning = true;
+    rules_local.game.gameboard.animation_states.isrunning = true;
 
     if (!rules_local.tabAlreadyActive) {
         const play_order = [8, 4, 5, 2, 9, 1, 7];
 
-        rules_local.gamezone.progressbar.setAttribute('value', 0);
-        rules_local.gamezone.progressbar.setAttribute('max', play_order.length);
+        rules_local.game.progressbar.setAttribute('value', 0);
+        rules_local.game.progressbar.setAttribute('max', play_order.length);
 
         let switchplayer = true;
 
         for (let i = 0; i < play_order.length; i++) {
-            if (rules_local.animation_states.cancelled) {
+            if (rules_local.game.gameboard.animation_states.cancelled) {
                 break;
             }
             await sleep(1000);
-            rules_local.gamezone.gameboard.cells[play_order[i]-1].innerHTML = switchplayer ?
-                                                                  rules_local.gamezone.gameboard.player1 :
-                                                                  rules_local.gamezone.gameboard.player2 ;
-            rules_local.gamezone.progressbar.setAttribute('value', i+1);
+            rules_local.game.gameboard.cells[play_order[i]-1].innerHTML = switchplayer ?
+                                                                  rules_local.game.gameboard.players.player1 :
+                                                                  rules_local.game.gameboard.players.player2 ;
+            rules_local.game.progressbar.setAttribute('value', i+1);
             switchplayer = !switchplayer;
         }
-        rules_local.gamezone.gameboard.endgameAnimation([7, 8, 9], 'win', rules_local.animation_states.cancelled);
+        await sleep(100);
+        rules_local.game.gameboard.detectCombination();
     }
-    return rules_local.animation_states.isrunning = false;
+    return rules_local.game.gameboard.animation_states.isrunning = false;
 }
 
 async function animationClean() {
     rules_local.tabAlreadyActive = false;
-    while (rules_local.animation_states.isrunning) {
-        rules_local.animation_states.cancelled = true;
+    while (rules_local.game.gameboard.animation_states.isrunning) {
+        rules_local.game.gameboard.animation_states.cancelled = true;
         await sleep(10);
     }
-    rules_local.animation_states.cancelled = false;
-    rules_local.gamezone.gameboard.clean();
+    rules_local.game.gameboard.animation_states.cancelled = false;
+    rules_local.game.gameboard.clean();
 }

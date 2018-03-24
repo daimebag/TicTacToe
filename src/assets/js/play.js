@@ -1,10 +1,11 @@
+const GameModel = require('./gamemodel.js');
+
 module.exports = play_local = {
-    gameboard: {
-        board: document.getElementById('play_game_board'),
-        cells: {}
-    },
-    gamesession: {
-        round: undefined
+    gameboard: new GameModel(document.getElementById('play_game_board')),
+    gamesession_states: {
+        cellPlayed: undefined,
+        mode: 'pve',
+        round: 0
     },
     panel: {
         mode: {
@@ -16,42 +17,45 @@ module.exports = play_local = {
     },
     init: function () {
         this.panel.mode.pve.classList.add('is-link');
+        gameSession('pve')
     }
 };
-// Add cells on rules_local.gamezone Object
+
+// ADD LISTENER FOR ALL CELLS
 for (let i = 0; i < 9; i++) {
-    play_local.gameboard.cells[`cell` + (i + 1)] = play_local.gameboard.board.children[i];
-    play_local.gameboard.cells[`cell` + (i + 1)].addEventListener('click', undefined);
+    play_local.gameboard.cells[i].addEventListener('click', function() {
+        play_local.gamesession_states.cellPlayed = play_local.gameboard.cells[i];
+    });
 }
 
+// PANEL SECTION - RESET BUTTON
 function reset() {
     play_local.panel.score.innerText = "0 - 0";
     return console.log("TicTacToe Message: Game was reinitialized.");
 }
-
 play_local.panel.reset.addEventListener('click', reset);
 
-function switchGameMode() {
-    reset();
+//PANEL SECTION - GAMEMODE BUTTON
+function switchGameMode(mode) {
+    console.log('this = ', this);
     if (!this.classList.contains('is-link')) {
+        reset();
         this.classList.toggle('is-link');
         this.nextElementSibling ?
             this.nextElementSibling.classList.toggle('is-link') :
             this.previousElementSibling.classList.toggle('is-link');
-    } else {
-        return false;
+        this.gamesession_states.mode = mode;
     }
-    return true;
 }
+play_local.panel.mode.pvp.addEventListener('click', function() {
+    switchGameMode('pvp');
+});
+play_local.panel.mode.pve.addEventListener('click', function() {
+    switchGameMode('pve');
+});
 
-play_local.panel.mode.pvp.addEventListener('click', switchGameMode);
-play_local.panel.mode.pve.addEventListener('click', switchGameMode);
 
 // GAME SECTION
-
-
-
-
 function gameSession() {
 
 }
