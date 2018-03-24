@@ -1,9 +1,14 @@
 const GameModel = require('./gamemodel.js');
+const utils = require('./utils.js');
 
 module.exports = play_local = {
-    gameboard: new GameModel(document.getElementById('play_game_board')),
+    game: new GameModel(document.getElementById('play_game_board')),
     session: {
-        cellsPlayed: [],
+        cellsEmpty: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+        cellsPlayed: {
+            indexPlayers: [],
+            indexCells: []
+        },
         mode: 'pve',
         currentPlayer: 0
     },
@@ -34,30 +39,33 @@ module.exports = play_local = {
 // ADD LISTENER FOR ALL CELLS
 function cellsToggleEvent(eventOn) {
     if (eventOn) {
-        for (let cell of play_local.gameboard.cells) {
+        for (let cell of play_local.game.cells) {
             cell.addEventListener('click', play);
         }
     } else {
-        for (let cell of play_local.gameboard.cells) {
+        for (let cell of play_local.game.cells) {
             cell.removeEventListener('click', play);
         }
     }
 }
+
 // PANEL SECTION - RESET BUTTON
 async function reset() {
-    play_local.gameboard.animation_states.cancelled = true;
+    play_local.game.animation_states.cancelled = true;
     cleanSession();
     cellsToggleEvent(true);
     play_local.panel.score.player1.innerHTML = 0;
     play_local.panel.score.player2.innerHTML = 0;
-    await play_local.gameboard._sleep(500);
-    play_local.gameboard.animation_states.cancelled = false;
+    await utils.sleep(500);
+    play_local.game.animation_states.cancelled = false;
     return console.log("TicTacToe Message: Game was reinitialized.");
 }
 
-function cleanSession () {
-    play_local.gameboard.clean();
-    play_local.session.cellsPlayed = [];
+function cleanSession() {
+    play_local.game.clean();
+    play_local.session.cellsEmpty = [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ];
+    play_local.session.cellsPlayed.indexPlayers = [];
+    play_local.session.cellsPlayed.indexCells = [];
     play_local.session.currentPlayer = 0;
 }
 
@@ -75,34 +83,35 @@ function switchGameMode(e, mode) {
 }
 
 
-
 // GAME SECTION
 async function play() {
     cellsToggleEvent(false);
-    const currentCell = this.id.slice(-1);
+    const currentCell = this.id.slice(-1)-1;
     let scoreCurrentPlayer = Object.values(play_local.panel.score)[play_local.session.currentPlayer];
     const scoreAnimation = ['animated', 'flipInX'];
 
     scoreCurrentPlayer.classList.remove(...scoreAnimation);
 
-    if (play_local.session.cellsPlayed.includes(currentCell)) {
+    if (play_local.session.cellsPlayed.indexCells.includes(currentCell)) {
         return false;
     }
-    this.innerHTML = Object.values(play_local.gameboard.players)[play_local.session.currentPlayer];
+    this.innerHTML = Object.values(play_local.game.players)[play_local.session.currentPlayer];
 
-    const endgame = await play_local.gameboard.detectCombination();
-    if (play_local.gameboard.animation_states.cancelled) {
+    const endgame = await play_local.game.detectCombination();
+    if (play_local.game.animation_states.cancelled) {
         return;
     }
     if (endgame) {
         cleanSession();
         if (endgame != 'draw') {
-            scoreCurrentPlayer.innerHTML ++;
+            scoreCurrentPlayer.innerHTML++;
             scoreCurrentPlayer.classList.add(...scoreAnimation);
         }
     }
     else {
-        play_local.session.cellsPlayed.push(currentCell);
+        play_local.session.cellsEmpty.splice( play_local.session.cellsEmpty.indexOf(currentCell), 1 );
+        play_local.session.cellsPlayed.indexPlayers.push(play_local.session.currentPlayer);
+        play_local.session.cellsPlayed.indexCells.push(currentCell);
         play_local.session.currentPlayer ^= true;
         if (play_local.session.currentPlayer && play_local.session.mode == 'pve') {
             bot();
@@ -111,6 +120,11 @@ async function play() {
     cellsToggleEvent(true);
 }
 
-function bot() {
-    return true;
+async function bot() {
+    let cell = play_local.session.cellsEmpty[utils.getRandomInt(play_local.session.cellsEmpty.length)];
+    console.log('cell: ', cell);
+    console.log('cellsEmpty: ', play_local.session.cellsEmpty);
+    console.log('game.cells[cell]', play_local.game.cells[cell]);
+    await utils.sleep(1000);
+    return play_local.game.cells[cell].click();
 }

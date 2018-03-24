@@ -1,7 +1,13 @@
+const utils = require('./utils.js');
+
 module.exports = class GameModel {
     constructor(board) {
         this.board = board;
         this.cells = Array.from(this.board.children);
+        this.players = {
+            player1: '<i class="icon ion-close"></i>',
+            player2: '<i class="icon ion-ios-circle-outline"></i>'
+        };
         this.winningCombinations = "012 345 678 036 147 258 048 246 ";
         this.endgameResultTypes = {
             win: ['game_board_cell__pop', 'game_board_cell__win'],
@@ -9,10 +15,6 @@ module.exports = class GameModel {
             draw: ['game_board_cell__pop', 'game_board_cell__draw'],
         };
         this.endgameResultAllTypes = Array.from(new Set([].concat.apply([], Object.values(this.endgameResultTypes))));
-        this.players = {
-            player1: '<i class="icon ion-close"></i>',
-            player2: '<i class="icon ion-ios-circle-outline"></i>'
-        };
         this.animation_states = {
             isrunning: false,
             cancelled: false
@@ -66,18 +68,15 @@ module.exports = class GameModel {
                 if (this.animation_states.cancelled) {
                     return;
                 }
-                await this._sleep(200);
+                await utils.sleep(200);
                 if (this.animation_states.cancelled) {
                     return;
                 }
                 this.cells[cell].classList.add(...endgameResult);
-                await this._sleep(200);
+                await utils.sleep(200);
             }
         } else {
             endgame = 'draw';
-            function getRandomInt(max) {
-                return Math.floor(Math.random() * Math.floor(max));
-            }
             outer:
             for (let cs = 0; cs < 3; cs++) {
                 for (let c = 0; c < 3; c++) {
@@ -86,18 +85,18 @@ module.exports = class GameModel {
                         if (this.animation_states.cancelled) {
                             return;
                         }
-                        cell = getRandomInt(9);
+                        cell = utils.getRandomInt(9);
                         if (combination.includes(cell)) {
                             this.cells[cell].classList.add(...endgameResult);
                             combination = combination.filter(e => e !== cell);
                             break;
                         }
                     }
-                    await this._sleep(100);
+                    await utils.sleep(100);
                 }
             }
         }
-        await this._sleep(400);
+        await utils.sleep(400);
         return endgame;
     }
 
@@ -109,8 +108,38 @@ module.exports = class GameModel {
         }
     }
 
-    // FUNCTION SLEEP USED FOR ANIMATION
-    _sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 };
+
+async function play() {
+    cellsToggleEvent(false);
+    const currentCell = this.id.slice(-1);
+    let scoreCurrentPlayer = Object.values(play_local.panel.score)[play_local.session.currentPlayer];
+    const scoreAnimation = ['animated', 'flipInX'];
+
+    scoreCurrentPlayer.classList.remove(...scoreAnimation);
+
+    if (play_local.session.cellsPlayed.includes(currentCell)) {
+        return false;
+    }
+    this.innerHTML = Object.values(play_local.game.players)[play_local.session.currentPlayer];
+
+    const endgame = await play_local.game.detectCombination();
+    if (play_local.game.animation_states.cancelled) {
+        return;
+    }
+    if (endgame) {
+        cleanSession();
+        if (endgame != 'draw') {
+            scoreCurrentPlayer.innerHTML ++;
+            scoreCurrentPlayer.classList.add(...scoreAnimation);
+        }
+    }
+    else {
+        play_local.session.cellsPlayed.push(currentCell);
+        play_local.session.currentPlayer ^= true;
+        if (play_local.session.currentPlayer && play_local.session.mode == 'pve') {
+            bot();
+        }
+    }
+    cellsToggleEvent(true);
+}
