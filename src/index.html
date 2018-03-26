@@ -51,7 +51,7 @@
         <!--BEGIN- TAB_PLAY -->
         <div id="tab_play" class="columns">
             <!--BEGIN- TAB_PLAY_GAME_PLAYZONE -->
-            <section class="game_playzone column is-two-thirds">
+            <section class="playzone column is-three-fifths">
                 <div id="play_game_board" class="game_board has-text-white">
                     <div id="play_game_board_cell1" class="game_board_cell"></div>
                     <div id="play_game_board_cell2" class="game_board_cell"></div>
@@ -67,7 +67,7 @@
             </section>
             <!-- TAB_PLAY_GAME_PLAYZONE -END-->
             <!--BEGIN- TAB_PLAY_GAME_PANEL -->
-            <section class="game_panel column is-one-third">
+            <section class="game_panel column is-two-fifths">
                 <div class="buttons has-addons is-centered">
                     <button id="game_panel_mode_pvp" class="button">
                         <span class="icon is-small">
@@ -82,7 +82,9 @@
                         <span>Player vs Bot</span>
                     </button>
                 </div>
-                <div id="game_panel_score" class="has-text-centered has-text-weight-bold"><p><span id="game_panel_score_player1" class="game_panel_score_players">0</span> - <span id="game_panel_score_player2" class="game_panel_score_players">0</span></p></div>
+                <div id="game_panel_score" class="has-text-centered has-text-weight-bold"><p><span
+                        id="game_panel_score_player1" class="game_panel_score_players">0</span> - <span
+                        id="game_panel_score_player2" class="game_panel_score_players">0</span></p></div>
                 <div id="game_panel_reset_container" class="field has-addons has-addons-centered">
                     <p class="control">
                         <button id="game_panel_reset_button" class="button is-light is-large"><span class="icon"><i
@@ -96,7 +98,7 @@
         <!--BEGIN- TAB_RULES -->
         <div id="tab_rules" class="columns">
             <!--BEGIN- TAB_RULES_GAME_PLAYZONE -->
-            <section class="game_playzone column is-two-thirds">
+            <section class="playzone column is-three-fifths">
                 <div id="rules_game_board" class="game_board has-text-white">
                     <div id="rules_game_board_cell1" class="game_board_cell"></div>
                     <div id="rules_game_board_cell2" class="game_board_cell"></div>
@@ -115,7 +117,7 @@
             </section>
             <!-- TAB_RULES_GAME_PLAYZONE -END-->
             <!--BEGIN- TAB_RULES_GAME_PANEL-->
-            <section id="rules_game_panel" class="game_panel column is-one-third">
+            <section id="rules_game_panel" class="game_panel column is-two-fifths">
                 <div class="content game_panel_article">
                     <p>Tic-tac-toe (also known as noughts and crosses or Xs and Os) is a paper-and-pencil game for two
                         players.</p>
@@ -123,10 +125,10 @@
                     <p>The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal
                         row wins the game.</p>
                     <div class="field has-addons has-addons-centered">
-                    <p class="control">
-                        <button id="rules_replay_button" class="button is-light is-large"><span class="icon"><i
-                                class="ion-ios-play-outline"></i> </span><span>Replay</span></button>
-                    </p>
+                        <p class="control">
+                            <button id="rules_replay_button" class="button is-light is-large"><span class="icon"><i
+                                    class="ion-ios-play-outline"></i> </span><span>Replay</span></button>
+                        </p>
                     </div>
 
                 </div>
@@ -135,36 +137,70 @@
         </div>
         <!-- TAB_RULES -END-->
         <!--BEGIN- TAB_ABOUT -->
-        <div id="tab_about" class="columns">
-            <div class="column is-three-fifths is-offset-one-fifth">
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title">How does this website work?</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
-                                <figure class="image is-48x48">
-                                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <p class="title is-4">John Smith</p>
-                                <p class="subtitle is-6">@johnsmith</p>
-                            </div>
-                        </div>
+        <div id="tab_about" class="columns is-8 is-fluid is-multiline">
 
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image has-text-centered">
+                        <figure class="image is-128x128 is-center about_img">
+                            <img src="https://jgthms.com/web-design-in-4-minutes/bulma.png">
+                        </figure>
+                    </div>
+                    <div class="card-content has-text-centered">
                         <div class="content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                            <a href="#">#css</a> <a href="#">#responsive</a>
-                            <br>
-                            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                            <h2>Code</h2>
+                            <p>This Website was built in pure HTML and JavaScript.</p>
+                            <p>I used a framework only for CSS, <a target="_blank" href="https://bulma.io/">Bulma</a>, which allowed me to quickly design it, without ignoring the attractive and responsive approach.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image has-text-centered">
+                        <figure class="image is-128x128 is-center about_img">
+                            <img src="https://cdn.worldvectorlogo.com/logos/webpack-icon.svg">
+                        </figure>
+                    </div>
+                    <div class="card-content has-text-centered">
+                        <div class="content">
+                            <h2>Build</h2>
+                            <p><a href="https://webpack.js.org/">Webpack</a> was used during development, I used it with <a target="_blank" href="https://yarnpkg.com/">Yarn</a> to:
+                                <ul class="list_unstyle">
+                                    <li>Manage dependencies (Loaders, Frameworks, etc...).</li>
+                                    <li>Transforming (Babel.js, AutoPrefixer...).</li>
+                                    <li>Compiling (SASS).</li>
+                                    <li>Bundling.</li>
+                                    <li>And finally push all of necessary files in production.</li>
+                                </ul>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image has-text-centered">
+                        <figure class="image is-128x128 is-center">
+                            <img src="https://cdn.worldvectorlogo.com/logos/docker.svg">
+                        </figure>
+                    </div>
+                    <div class="card-content has-text-centered">
+                        <div class="content">
+                            <h2>Deploy</h2>
+                            <p>I was used Docker,
+                                <br> for Nginx and also to store my application in a container.</p>
+                            <p>The App container is automatically rebuilt on each commit on the github repository.</p>
+                            <p>Everything was deployed with Docker Compose.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <!-- TAB_ABOUT -END-->
 
     </div>
@@ -175,11 +211,13 @@
 <footer class="footer">
     <div class="container">
         <div class="columns is-multiline has-text-centered">
-            <div class="column is-one-third"><a class="has-text-white"><p class=""><i
+            <div class="column is-one-third"><a class="has-text-white" target="_blank"
+                                                href="https://github.com/daimebag/TicTacToe"><p class=""><i
                     class="footer_icon icon ion-social-github"></i> View GitHub Project</p></a></div>
-            <div class="column is-one-third"><a class="has-text-white"><i
+            <div class="column is-one-third"><a class="has-text-white" target="_blank"
+                                                href="https://github.com/daimebag/"><i
                     class="footer_icon icon ion-android-folder-open"></i> See my other project</a></div>
-            <div class="column is-one-third"><a class="has-text-white"><i
+            <div class="column is-one-third"><a class="has-text-white" href="mailto:kevin.marilleau@gmail.com?"><i
                     class="footer_icon icon ion-paper-airplane"></i> Contact</a></div>
         </div>
     </div>
