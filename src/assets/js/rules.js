@@ -4,7 +4,7 @@ const utils = require('./utils.js');
 
 module.exports = rules_local = {
     game: {
-        game: new GameModel(document.getElementById('rules_game_board')),
+        gameboard: new GameModel(document.getElementById('rules_game_board')),
         progressbar: document.getElementById('rules_progressbar')
     },
     panel: {

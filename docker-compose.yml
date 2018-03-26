@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+#    environment:
+#      - NGINX_HOST=kmar.io
+    volumes:
+      - app-volume:/usr/share/nginx/html:ro
+
+  app:
+    image: daimebag/tictactoe:latest
+    restart: always
+    volumes:
+      - app-volume:/TicTacToe/dist
+
+volumes:
+  app-volume:

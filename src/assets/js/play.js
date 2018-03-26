@@ -125,6 +125,6 @@ async function bot() {
     console.log('cell: ', cell);
     console.log('cellsEmpty: ', play_local.session.cellsEmpty);
     console.log('game.cells[cell]', play_local.game.cells[cell]);
-    await utils.sleep(1000);
+    await utils.sleep(200);
     return play_local.game.cells[cell].click();
 }

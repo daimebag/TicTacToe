@@ -1,6 +1,10 @@
 $content_h: calc(100vh - 396px);
 
 $color_primary: rgb(50, 115, 220);
+$green: #1cca63;
+$dark: #242424;
+$red: #ca2b2e;
+$light: lightgrey;
 
 .hero-body {
   background-color: $color_primary;
@@ -19,8 +23,12 @@ $color_primary: rgb(50, 115, 220);
   margin: 12px 0px;
   min-height: calc(100vh - 396px);
 }
+.playzone {
+  left: 12px;
+  margin: 50px auto 30px auto;
+}
 
-#content, #content_container, .game_playzone, .game_board {
+#content, #content_container{
   min-height: $content_h;
 }
 
@@ -46,21 +54,19 @@ $color_primary: rgb(50, 115, 220);
 .game_panel_score_players {
   display: inline-block;
 }
-.game_playzone {
-  left: 12px;
-}
+
 
 .game_board {
   display: grid;
-  margin: auto;
+  margin: auto 30px;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 4px;
-  min-width: 50%;
-  max-width: 200px;
+  max-height: 500px;
+  max-width: 500px;
 }
 
 .game_board>.game_board_cell {
-  border: 1px solid lightgrey;
+  border: 1px solid $light;
   position: relative;
 }
 
@@ -79,23 +85,23 @@ $color_primary: rgb(50, 115, 220);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #242424;
-  font-size: 9vmax;
+  background-color: $dark;
+  font-size: 12vh;
 }
 .game_board_cell__pop {
   animation: pop 0.3s linear 1;
 }
 
 .game_board_cell__win {
-   background-color: #1cca63;
+   background-color: $green;
  }
 
 .game_board_cell__lose {
-  background-color: #ca2b2e;
+  background-color: $red;
 }
 
 .game_board_cell__draw {
-  background-color: #6d6d6d;
+  background-color: $light;
 }
 
 @keyframes pop{
@@ -116,9 +122,10 @@ $color_primary: rgb(50, 115, 220);
   padding: 10px 20px;
 }
 
+
 .footer {
   margin-bottom: 0px;
-  background-color: #363636;
+  background-color: $dark;
   font-size: 1em;
 }
 
@@ -128,4 +135,21 @@ $color_primary: rgb(50, 115, 220);
 
 .footer_icon {
   font-size: 1.5em;
+}
+
+.is-center {
+  margin: 10px auto 20px;
+}
+
+.list_unstyle>li {
+  list-style: none;
+}
+
+.card {
+  height: 100%;
+}
+
+.card-image {
+  padding: 10px 0px;
+  background-color: whitesmoke;
 }
