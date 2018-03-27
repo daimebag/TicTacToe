@@ -9,16 +9,19 @@ services:
       - app
     ports:
       - "80:80"
-#    environment:
-#      - NGINX_HOST=kmar.io
+    environment:
+      - NGINX_HOST=kmar.io
     volumes:
       - app-volume:/usr/share/nginx/html:ro
+      - app-conf:/etc/nginx/conf.d/tictactoe_nginx.conf:ro
 
   app:
     image: daimebag/tictactoe:latest
     restart: always
     volumes:
       - app-volume:/TicTacToe/dist
+      - app-conf:/TicTacToe
 
 volumes:
   app-volume:
+  app-conf:
